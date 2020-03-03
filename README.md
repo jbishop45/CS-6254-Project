@@ -1,1 +1,1 @@
-# CS-6254-Project
+# Statistical Machine Learning Project
