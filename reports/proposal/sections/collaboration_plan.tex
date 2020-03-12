@@ -1,15 +1,15 @@
 \newcounter{tasknumber}
 
-\newcommand{\task}[5]
+\newcommand{\task}[6]
 {
 \stepcounter{tasknumber}
-\noindent \textbf{Task \thetasknumber}:
+\noindent \textbf{Task \thetasknumber}: #1
 \begin{itemize}
-    \item \textbf{Description}: #1
-    \item \textbf{Leaders}: #2
-    \item \textbf{Deadline}: #3
-    \item \textbf{Importance}: #4
-    \item \textbf{Potential challenges}: #5
+    \item \textbf{Description}: #2
+    \item \textbf{Leaders}: #3
+    \item \textbf{Deadline}: #4
+    \item \textbf{Importance}: #5
+    \item \textbf{Potential challenges}: #6
 \end{itemize}
 }
 
@@ -19,6 +19,7 @@
 \subsection{Literature Review}
 
 \task
+{Literature Review}
 {}
 {}
 {}
@@ -26,20 +27,47 @@
 {}
 
 \task
+{Implementing (1)}
 {}
 {}
 {}
 {}
 {}
 
+{Implementing (2)}
+{}
+{}
+{}
+{}
+{}
 
+{Implementing (3)}
+{}
+{}
+{}
+{}
+{}
 
-\subsection{Posterboard}
+{Implementing (4)}
+{}
+{}
+{}
+{}
+{}
 
-\subsection{Final Report}
 
 \task
-{Compile all writing from literature review and results from implementations into a final report.}
+{Design and Run Experiments}
+{}
+{}
+{}
+{}
+{}
+
+
+\task
+{Poster Board and Final Reports}
+{}
 {}
 {}
 {}
