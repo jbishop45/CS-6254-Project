@@ -8,7 +8,7 @@ Consider an alternative case where users simply ``like" or ``dislike" each movie
 This project will survey multiple matrix completion algorithms, focusing specifically on various methods of low-rank matrix completion and one-bit matrix completion. In addition to presenting the mathematical techniques used in matrix completion (Alternating projections, regularization, and majorize-minimize algorithms), this project will implement four different algorithms and compare their performance on synthetic datasets. Effects of parameters such as the percentage of observed entries, the true rank of $X$, and the dimensions of $X$ on the recovery error will be investigated. The four algorithms implemented are as follows:
 \begin{itemize}
     \item Alternating projection method for noiseless observations 
-    \item Alternating projection method with regularization (exact rank and nucear norm) for noisy observations 
+    \item Alternating projection method with regularization (exact rank and nuclear norm) for noisy observations 
     \item Projected gradient descent with nuclear norm regularization 
     \item One-bit matrix completion for $f(x) = (1 + e^{-x})^{-1}$ (logistic model)
 \end{itemize}
