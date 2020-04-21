@@ -18,7 +18,7 @@
 function [x_hat, iter] = svt(Y, M, tau, increment, step_size, tol, max_iters)
 
     % Determine k_0 as defined in algorithm description.
-    k_0 = ceil(tau / (step_size * norm(Y)));
+    k_0 = ceil(tau / (step_size * norm(Y, 'fro')));
     
     % Store Frobenius norm of input data matrix - used to check early
     % termination conditions on every iteration.
