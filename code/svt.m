@@ -22,7 +22,7 @@ function [x_hat, iter] = svt(Y, M, tau, increment, step_size, tol, max_iters)
     
     % Store Frobenius norm of input data matrix - used to check early
     % termination conditions on every iteration.
-    data_norm = norm(Y);
+    data_norm = norm(Y, 'fro');
     
     % Set some starting conditions.
     y_k = k_0 * step_size * Y;
