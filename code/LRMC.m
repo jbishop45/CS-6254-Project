@@ -31,11 +31,11 @@ function [X_hat, iter] = LRMC(Y, M, K, threshold, max_iter)
     while(iter < max_iter)
         X_hat(M) = Y(M);
         [U,s,V] = svd(X_hat);
-        if (threshold.type == "POCS_noiseless")
+        if (threshold.type == "POCS_noiseless") %Algorithm 1
             X_hat = U(:,1:K)*s(1:K, 1:K)*V(:,1:K)';
-        elseif(threshold.type == "nuc_norm")
+        elseif(threshold.type == "nuc_norm") %Algorithm 2, v1
             X_hat = U*soft(s,threshold.beta)*V';
-        elseif(threshold.type == "exact_rank")
+        elseif(threshold.type == "exact_rank") %Algorithm 2, v2
             X_hat = U*hard(s,threshold.beta)*V';
         end
         

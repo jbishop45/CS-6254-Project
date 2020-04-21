@@ -22,6 +22,7 @@
 %                           entries of X
 %           -noise          (POS REAL) The variance of the additive 
 %                           Gaussian noise in our observations
+%           -K              Guess for true rank of X
 % 
 %       solver  = (STRUCT) set of solver parameters
 %           -type           (STRING) Type of solver used. 
@@ -67,18 +68,15 @@ function err_v = testing_pipeline(parameters, solver)
             %Guess for rank of X is fixed to 3 (CHANGE LATER!)
             if(strcmp(parameters.sweep_type, 'dim')) 
                 [Y, M, X] = generate_data(sweep_range(i), r, mag, rand_type, frac, noise);
-                K = 3;
             elseif(strcmp(parameters.sweep_type, 'rank'))
                 [Y, M, X] = generate_data(size_X, sweep_range(i), mag, rand_type, frac, noise);
-                K = 3;
             elseif(strcmp(parameters.sweep_type, 'frac'))
                 [Y, M, X] = generate_data(size_X, r, mag, rand_type, sweep_range(i), noise);
-                K = r;
             end
             
             %Check which solver to use
             if(strcmp(solver.type, 'LRMC'))
-                [X_hat, ~] = LRMC(Y, M, K, solver.threshold, solver.max_iter);
+                [X_hat, ~] = LRMC(Y, M, parameters.K, solver.threshold, solver.max_iter);
             elseif(strcmp(solver.type, 'PGD'))
                 [X_hat, ~] = PGD(Y, M); %FILL IN THIS LINE WHEN PGD IS DONE
             end
