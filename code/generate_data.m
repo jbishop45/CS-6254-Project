@@ -11,7 +11,7 @@
 %           -'Gaussian' = Gaussian. [randn] used
 %       frac    =  (REAL NUMBER IN [0,1]) roughly the fraction of entries of 
 %                   Y to be observed.
-%       noise   =  magiance the additive Gaussian noise
+%       noise   =  mag the additive Gaussian noise
 %
 %   OUTPUTS:
 %       Y = matrix with entries Y_ij = y_ij if (i,j) is observed and 
@@ -46,5 +46,6 @@ function [Y, M, X] = generate_data(size_X, r, mag, type, frac, noise)
     M = logical(1 - M);
     
     %Generate the observed data with element-wise multiplication
-    Y = M .* X + sqrt(noise)*randn(D1, D2);
+    Y = M .* X + noise*randn(D1, D2);
+    %disp(noise*randn(D1,D2))
 end

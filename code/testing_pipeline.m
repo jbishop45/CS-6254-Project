@@ -6,6 +6,7 @@
 %               matrices at the moment.
 %               -'rank': Rank of true (latent) matrix
 %               -'frac': Fraction of observed entries
+%               -'add_noise': Additive noise
 %           -sweep_range    (VECTOR OF POS REALS) The values we want the sweep
 %                           parameter to take
 %           -MC             (POS INTEGER) The number of trials we run for
@@ -22,7 +23,12 @@
 %                           entries of X
 %           -noise          (POS REAL) The variance of the additive 
 %                           Gaussian noise in our observations
+%                           ONLY USED IF sweep_type =/= 'add_noise'
 %           -K              Guess for true rank of X
+%           -rand_type      Random method to generate data. Passed through
+%                           to 'generate_data'
+%               -'Gaussian': Generates data from Gaussian
+%               -'UAR': Generates data from uniform distr on [0,1]
 % 
 %       solver  = (STRUCT) set of solver parameters
 %           -type           (STRING) Type of solver used. 
@@ -48,16 +54,22 @@ function err_v = testing_pipeline(parameters, solver)
     if(strcmp(parameters.sweep_type, 'dim'))
         r = parameters.r;
         frac = parameters.frac; 
+        noise = parameters.noise;
     elseif(strcmp(parameters.sweep_type, 'rank'))
         size_X = parameters.size_X;
         frac = parameters.frac;
+        noise = parameters.noise;
     elseif(strcmp(parameters.sweep_type, 'frac'))
         size_X = parameters.size_X;
         r = parameters.r;
+        noise = parameters.noise;
+    elseif(strcmp(parameters.sweep_type, 'add_noise'))
+        size_X = parameters.size_X;
+        r = parameters.r;
+        frac = parameters.frac;
     end
     mag = parameters.mag;
     rand_type = parameters.rand_type;
-    noise = parameters.noise;
     
     %Define error matrix and sweep across each parameter.
     err_v = zeros(parameters.MC, length(sweep_range));
@@ -72,6 +84,8 @@ function err_v = testing_pipeline(parameters, solver)
                 [Y, M, X] = generate_data(size_X, sweep_range(i), mag, rand_type, frac, noise);
             elseif(strcmp(parameters.sweep_type, 'frac'))
                 [Y, M, X] = generate_data(size_X, r, mag, rand_type, sweep_range(i), noise);
+            elseif(strcmp(parameters.sweep_type, 'add_noise'))
+                [Y, M, X] = generate_data(size_X, r, mag, rand_type, frac, sweep_range(i));
             end
             
             %Check which solver to use
@@ -82,7 +96,7 @@ function err_v = testing_pipeline(parameters, solver)
             end
             
             %store error from mc-th trial
-            err_v(mc, i) = cmp_err(X, X_hat); 
+            err_v(mc, i) = cmp_err(X, X_hat);
         end
     end
     
