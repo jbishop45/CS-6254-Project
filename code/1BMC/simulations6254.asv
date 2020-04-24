@@ -66,11 +66,55 @@ if experiment_bool
         i = 1;
 
         for sigmaVals = 0:0.1:1
-        result = Experiment(pct,d,r,maxInner, sigmaVals, trials);
-        exp3_err{i} = result.err;
-        exp3_obsErr{i} = result.obsErr;
-        exp3_normM{i} = result.normM
-        i = i+1;
+            result = Experiment(pct,d,r,maxInner, sigmaVals, trials);
+            exp3_err{i} = result.err;
+            exp3_obsErr{i} = result.obsErr;
+            exp3_normM{i} = result.normM
+            i = i+1;
+        end
+        save('6254_data/exp3.mat','exp3_err','exp3_obsErr','exp3_normM')
     end
-    save('6254_data/exp3.mat','exp3_err','exp3_obsErr','exp3_normM')
+end
+
+trials = 20;
+if demo_bool
+   percent = 0.5;
+   d = 100;
+   rank = 10;
+   maxInner = 1000;
+   sigma = 0.3;
+   trials = 20;
+   if (exp1_bool)
+       for t = 1:trials
+           err_trial = [];
+           for pct = 0.05:0.05:0.95
+               err_new = demo(pct,d,rank,maxInner,sigma);
+               err_trial = [err_trial,err_new];
+           end
+           err = err + err_trial/trials;
+       end
+       save('6254_data/exp1_demo.mat','err')
+   end  
+   if (exp2_bool)
+       for t = 1:trials
+           err_trial = [];
+           for r = 1:1:15
+               err_new = demo(percent,d,r,maxInner,sigma);
+               err_trial = [err_trial,err_new];
+           end
+           err = err + err_trial/trials;
+       end
+       save('6254_data/exp2_demo.mat','err')
+   end
+   if (exp3_bool)
+       err = [];
+       for t = 1:trials
+           err_trial = [];
+           for s = 0.1:0.1:1
+               err_new = demo(percent,d,rank,maxInner,s);
+               err_trial = [err_trial,err_new];
+           end
+           err = err + err_trial;
+       save('6254_data/exp3_demo.mat','err')
+   end
 end

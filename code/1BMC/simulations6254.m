@@ -1,5 +1,5 @@
-exp1_bool = 1;
-exp2_bool = 1;
+exp1_bool = 0;
+exp2_bool = 0;
 exp3_bool = 1;
 
 experiment_bool = 0;
@@ -76,11 +76,48 @@ if experiment_bool
     end
 end
 
+trials = 20;
 if demo_bool
-   err = [];
-   for sigma = 0.1:0.1:1
-       err_new = demo(sigma);
-       err = [err,err_new];
+   percent = 0.5;
+   d = 100;
+   rank = 10;
+   maxInner = 1000;
+   sigma = 0.3;
+   trials = 20;
+   if (exp1_bool)
+       err = zeros(1,19);
+       for t = 1:trials
+           err_trial = [];
+           for pct = 0.05:0.05:0.95
+               err_new = demo(pct,d,rank,maxInner,sigma);
+               err_trial = [err_trial,err_new];
+           end
+           err = err + err_trial/trials;
+       end
+       save('6254_data/exp1_demo.mat','err')
+   end  
+   if (exp2_bool)
+       err = zeros(1,15);
+       for t = 1:trials
+           err_trial = [];
+           for r = 1:1:15
+               err_new = demo(percent,d,r,maxInner,sigma);
+               err_trial = [err_trial,err_new];
+           end
+           err = err + err_trial/trials;
+       end
+       save('6254_data/exp2_demo.mat','err')
    end
-   save('6254_data/exp3_demo.mat','err')
+   if (exp3_bool)
+       err = zeros(1,10);
+       for t = 1:trials
+           err_trial = [];
+           for s = 0.1:0.1:1
+               err_new = demo(percent,d,rank,maxInner,s);
+               err_trial = [err_trial,err_new];
+           end
+           err = err + err_trial/trials;
+       end
+       save('6254_data/exp3_demo.mat','err')
+   end
 end

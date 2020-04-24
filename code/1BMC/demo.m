@@ -1,4 +1,4 @@
-function [err_new] = demo(sigma)
+function [err_new] = demo(pct,d,r,maxInner,sigma)
 %% demo.m
 % 
 % This file contains the code for a simple demo of the one bit matrix 
@@ -29,10 +29,10 @@ function [err_new] = demo(sigma)
 %clear all;
 close all;
 
-d1 = 200; % Number of rows in matrix
-d2 = 200; % Number of columns in matrix
-r = 3; % Rank
-pct = 25; % Percent of entries to observe
+d1 = d; % Number of rows in matrix
+d2 = d; % Number of columns in matrix
+%r = 3; % Rank
+pct = pct*100; % Percent of entries to observe
 %sigma = 0.3; % Noise level
 
 strm = RandStream('mt19937ar','Seed',5);
@@ -61,7 +61,7 @@ m = length(idx);
 
 %% Set up optimization problem
 options = struct();
-options.iterations = 10000; 
+options.iterations = maxInner; 
 options.stepMax    = 10000;
 options.stepMin    = 1e-4;
 options.optTol     = 1e-3;

@@ -8,7 +8,7 @@ sim = 'demo';
 % Exp 3: Sweep noise sigma
 exp = 3;
 
-%% select err index [1-6]
+%% select err index [1-6]... this only matters for Experiment.m, not demo.m
 % [1-4] Method 1: Combined Nuclear & Infinity Norm 
 %       * [1] norm(M-xhat,'fro');
 %       * [2] norm(M-x1_debias,'fro');
@@ -25,18 +25,26 @@ y_axis = 5;
 %% Load Relevant Variables for Chosen Exp
 switch exp
     case 1
-        load('6254_data/exp1.mat');
-        err = exp1_err;
-        obsErr = exp1_obsErr;
-        normM = exp1_normM;
+        if sim == 'demo'
+            load('6254_data/exp1_demo.mat')
+        else
+            load('6254_data/exp1.mat');
+            err = exp1_err;
+            obsErr = exp1_obsErr;
+            normM = exp1_normM;
+        end
         x = 0.05:0.05:0.95;
         figure; title('Recovery Error vs. Fraction of Observed Entries');
         xlabel('Fraction of Observed Entries')
     case 2
-        load('6254_data/exp2.mat');
-        err = exp2_err;
-        obsErr = exp2_obsErr;
-        normM = exp2_normM;
+        if sim == 'demo'
+            load('6254_data/exp2_demo.mat')
+        else
+            load('6254_data/exp2.mat');
+            err = exp2_err;
+            obsErr = exp2_obsErr;
+            normM = exp2_normM;
+        end
         x = 1:1:15;
         figure; title('Recovery Error vs. Rank');
         xlabel('Rank of X')
@@ -97,7 +105,11 @@ set(gcf,'position',[10,10,width,height])
 plot(x,data)
 legend('1BMC w/ Nuclear Norm only')
 grid on
-filename = ['6254_plots/1BMC_exp',num2str(exp),'_err',num2str(y_axis),'_plot.png'];
+if sim == 'demo'
+    filename = ['6254_plots/1BMC_exp',num2str(exp),'_err',num2str(y_axis),'_demo.png'];
+else
+    filename = ['6254_plots/1BMC_exp',num2str(exp),'_err',num2str(y_axis),'_exp.png'];
+end
 saveas(gcf,filename)
 
 
