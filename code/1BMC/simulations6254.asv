@@ -66,21 +66,11 @@ if experiment_bool
         i = 1;
 
         for sigmaVals = 0:0.1:1
-            result = Experiment(pct,d,r,maxInner, sigmaVals, trials);
-            exp3_err{i} = result.err;
-            exp3_obsErr{i} = result.obsErr;
-            exp3_normM{i} = result.normM
-            i = i+1;
-        end
-        save('6254_data/exp3.mat','exp3_err','exp3_obsErr','exp3_normM')
+        result = Experiment(pct,d,r,maxInner, sigmaVals, trials);
+        exp3_err{i} = result.err;
+        exp3_obsErr{i} = result.obsErr;
+        exp3_normM{i} = result.normM
+        i = i+1;
     end
-end
-
-if demo_bool
-   err = [];
-   for sigma = 0.1:0.1:1
-       err_new = demo(sigma);
-       err = [err,err_new];
-   end
-   save('6254_data/exp3_demo.mat','err')
+    save('6254_data/exp3.mat','exp3_err','exp3_obsErr','exp3_normM')
 end

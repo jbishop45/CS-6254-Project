@@ -49,7 +49,7 @@ switch exp
             obsErr = exp3_obsErr;
             normM = exp3_normM;
         end
-        x = 0.1:0.1:1;
+        x = 0:0.1:1;
         figure; title('Recovery Error vs. Noise Floor (sigma)');
         xlabel('sigma')
 end

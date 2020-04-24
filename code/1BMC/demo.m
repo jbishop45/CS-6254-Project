@@ -1,3 +1,4 @@
+function [err_new] = demo(sigma)
 %% demo.m
 % 
 % This file contains the code for a simple demo of the one bit matrix 
@@ -25,14 +26,14 @@
 
 
 %% Initialize
-clear all;
+%clear all;
 close all;
 
 d1 = 200; % Number of rows in matrix
 d2 = 200; % Number of columns in matrix
 r = 3; % Rank
 pct = 25; % Percent of entries to observe
-sigma = 0.3; % Noise level
+%sigma = 0.3; % Noise level
 
 strm = RandStream('mt19937ar','Seed',5);
 
@@ -87,4 +88,5 @@ Mhat = reshape(Mhat,d1,d2);
 Mhat_debias = U(:,1:r)*S(1:r,1:r)*V(:,1:r)'; % Project onto actual rank if known
 
 %% Compute relative error
-norm(Mhat_debias-M,'fro')/norm(M,'fro')
+err_new = norm(Mhat_debias-M,'fro')/norm(M,'fro');
+end
